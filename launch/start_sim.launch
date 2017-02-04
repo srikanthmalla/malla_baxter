@@ -1,0 +1,4 @@
+<launch>
+	<node name="baxter_sim" pkg="malla_baxter" type="baxter_sim.sh" respawn="false" />
+	<include file="$(find baxter_gazebo)/launch/baxter_world.launch" />	
+</launch>

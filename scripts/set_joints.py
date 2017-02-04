@@ -32,15 +32,17 @@ def angles_callback(data):
     print(set_angles[index])
     print("current angles")
     print(get_angles['left_s0'])
-    set_j(left,lj[index],-1.7,0.3);
+    ang=set_angles[index]*(3.4/2.4)-1.7016
+    set_j(left,lj[index],ang,0.3);
     head=baxter_interface.Head();
-    head.set_pan(0, speed=0.3)
+    head.set_pan(0, speed=0.5)
     print("Done.")
 
 
 
 def main():
     print("Initializing node... ")
+    rospy.sleep(10);
     rospy.init_node("set_joint_angles") #init rosnode
     rospy.Subscriber("/jointangles",Float32MultiArray, angles_callback)
     # pub = rospy.Publisher('robot_state',Float32MultiArray, queue_size=10)
@@ -59,8 +61,8 @@ def main():
     rate = rospy.Rate(10) # 10hz
     rospy.spin()
     # while not rospy.is_shutdown():
-    #     pub.publish(hello_str)
-    #     rate.sleep()
+    #     rospy.spin()
+        # rate.sleep()
 
 
 
