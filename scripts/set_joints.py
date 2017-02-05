@@ -26,14 +26,18 @@ def angles_callback(data):
     # s0 is shoulder twist (-1.7016, 1.7016), s1 is shoulder bend(-2.147, +1.047)
     # e0 is elbow twist(-3.0541, 3.0541), e1 is elbow bend(-0.05,+2.618)
     # w0 is writst twist(-3.059, 3.059), w1 is wrist bend(-1.5707,+2.094), w2 is writst twist 2(-3.059,3.059)
-    index=0;
     get_angles=left.joint_angles()
     print("angles to be moved")
-    print(set_angles[index])
+    print(set_angles)
     print("current angles")
     print(get_angles['left_s0'])
-    ang=set_angles[index]*(3.4/2.4)-1.7016
-    set_j(left,lj[index],ang,0.3);
+    ang0=set_angles[1]*(3.4/2.4)-1.7016
+    set_j(left,lj[1],ang0,0.3);
+
+    ang1=set_angles[0]*(3.4/2.4)-1.7016
+    set_j(left,lj[0],ang0,0.3);
+
+
     head=baxter_interface.Head();
     head.set_pan(0, speed=0.5)
     print("Done.")

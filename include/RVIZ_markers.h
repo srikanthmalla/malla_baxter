@@ -1,12 +1,12 @@
 //author: srikanth malla
-//markers.h file
-#ifndef MARKERS_H_
-#define MARKERS_H_
+//RVIZ_markers.h file
+#ifndef RVIZ_MARKERS_H_
+#define RVIZ_MARKERS_H_
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <geometry_msgs/Point.h>
 
-class Markers
+class RVIZ_Markers
 {
 public:
 	void triangle_list(visualization_msgs::Marker &m);
@@ -17,9 +17,9 @@ public:
     void cylinder(visualization_msgs::Marker &m);
     void arrow(visualization_msgs::Marker &m);
 };
-void Markers::triangle_list(visualization_msgs::Marker &m)
+void RVIZ_Markers::triangle_list(visualization_msgs::Marker &m)
 {
-	m.header.frame_id = "/base"; // TODO
+	m.header.frame_id = "/world"; // TODO
     m.header.stamp = ros::Time();
     m.ns = "triangle_list";
     m.id = 0;
@@ -36,12 +36,12 @@ void Markers::triangle_list(visualization_msgs::Marker &m)
     m.scale.y = 1.0;
     m.scale.z = 1.0;
 }
-void Markers::add_point(visualization_msgs::Marker &m, geometry_msgs::Point &p, std_msgs::ColorRGBA &color)
+void RVIZ_Markers::add_point(visualization_msgs::Marker &m, geometry_msgs::Point &p, std_msgs::ColorRGBA &color)
 {
 	m.points.push_back(p);
 	m.colors.push_back(color);
 }
-void Markers::line_list(visualization_msgs::Marker &m)
+void RVIZ_Markers::line_list(visualization_msgs::Marker &m)
 {
 	m.header.frame_id = "/world"; // TODO
     m.header.stamp = ros::Time();
@@ -60,7 +60,7 @@ void Markers::line_list(visualization_msgs::Marker &m)
     m.scale.y = 0.01;
     m.scale.z = 0.01;
 }
-void Markers::line_strip(visualization_msgs::Marker &m)
+void RVIZ_Markers::line_strip(visualization_msgs::Marker &m)
 {
 	m.header.frame_id = "/world"; // TODO
     m.header.stamp = ros::Time();
@@ -79,9 +79,9 @@ void Markers::line_strip(visualization_msgs::Marker &m)
     m.scale.y = 1.0;
     m.scale.z = 1.0;
 }
-void Markers::points(visualization_msgs::Marker &m)
+void RVIZ_Markers::points(visualization_msgs::Marker &m)
 {
-	m.header.frame_id = "/right_wrist"; // TODO
+	m.header.frame_id = "/world"; // TODO
     m.header.stamp = ros::Time();
     m.ns = "line_strip";
     m.id = 0;
@@ -94,11 +94,11 @@ void Markers::points(visualization_msgs::Marker &m)
     m.pose.orientation.y = 0.0;
     m.pose.orientation.z = 0.0;
     m.pose.orientation.w = 1.0;
-    m.scale.x = 0.1;
-    m.scale.y = 0.1;
-    m.scale.z = 0.1;	
+    m.scale.x = 1;
+    m.scale.y = 1;
+    m.scale.z = 1;	
 }
-void Markers::cylinder(visualization_msgs::Marker &m)
+void RVIZ_Markers::cylinder(visualization_msgs::Marker &m)
 {
     m.header.frame_id = "/world"; // TODO
     m.header.stamp = ros::Time();
@@ -117,7 +117,7 @@ void Markers::cylinder(visualization_msgs::Marker &m)
     m.scale.y = 2;
     m.scale.z = 3;    
 }
-void Markers::arrow(visualization_msgs::Marker &m)
+void RVIZ_Markers::arrow(visualization_msgs::Marker &m)
 {
     m.header.frame_id = "/world"; // TODO
     m.header.stamp = ros::Time();

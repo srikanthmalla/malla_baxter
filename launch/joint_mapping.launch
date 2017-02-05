@@ -1,6 +1,6 @@
 <launch>
 	<node name="baxter_sim" pkg="malla_baxter" type="baxter_sim.sh" respawn="false" />
-	<node pkg="rosbag" type="play" name="player" output="screen" args="$(find malla_baxter)/data/test1.bag"/>
-	<node name="jointParser" pkg="malla_baxter" type="jointParser.py" respawn="false" output="screen" />
+	<node pkg="rosbag" type="play" name="player" output="screen" args="$(find malla_baxter)/data/test2.bag"/>
+	<node name="jointAllParser" pkg="malla_baxter" type="jointAllParser.py" respawn="false" output="screen" />
 	<node name="set_joints" pkg="malla_baxter" type="set_joints.py" respawn="false" output="screen" />
 </launch>

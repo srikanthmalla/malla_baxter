@@ -32,8 +32,10 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(move_baxter src/move_baxter.cpp)
-target_link_libraries(move_baxter ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+#add_executable(move_baxter src/move_baxter.cpp)
+#target_link_libraries(move_baxter ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(move_group src/moveit_interface.cpp)
-target_link_libraries(move_group ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+#add_executable(move_group src/moveit_interface.cpp)
+#target_link_libraries(move_group ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_executable(rviz_plotter src/rviz_plotter.cpp)
+target_link_libraries(rviz_plotter ${catkin_LIBRARIES})
