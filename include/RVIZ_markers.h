@@ -56,9 +56,9 @@ void RVIZ_Markers::line_list(visualization_msgs::Marker &m)
     m.pose.orientation.y = 0.0;
     m.pose.orientation.z = 0.0;
     m.pose.orientation.w = 1.0;
-    m.scale.x = 0.01;
-    m.scale.y = 0.01;
-    m.scale.z = 0.01;
+    m.scale.x = 0.1;
+    m.scale.y = 0.1;
+    m.scale.z = 0.1;
 }
 void RVIZ_Markers::line_strip(visualization_msgs::Marker &m)
 {
@@ -94,9 +94,9 @@ void RVIZ_Markers::points(visualization_msgs::Marker &m)
     m.pose.orientation.y = 0.0;
     m.pose.orientation.z = 0.0;
     m.pose.orientation.w = 1.0;
-    m.scale.x = 1;
-    m.scale.y = 1;
-    m.scale.z = 1;	
+    m.scale.x = 0.5;
+    m.scale.y = 0.5;
+    m.scale.z = 0.5;	
 }
 void RVIZ_Markers::cylinder(visualization_msgs::Marker &m)
 {
