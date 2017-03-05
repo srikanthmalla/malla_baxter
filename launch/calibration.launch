@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find vicon_bridge)/launch/vicon.launch">
+    	<arg name="hostport" value="130.215.206.248" />
+	</include>
+	<node name="calibration" pkg="malla_baxter" type="calibration.py" respawn="true" />
+</launch>
