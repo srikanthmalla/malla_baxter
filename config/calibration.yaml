@@ -1,0 +1,2 @@
+max_marker_velocity : 10000 #units mm/s. Average veclocity of each marker was [ 454.44179742   377.21883704  1204.7180539] using bag 2017-03-04-19-46-31.bag. Taking 10000 mm/s to be threshold 
+max_window_size: 5 # units Number of elements in window. TODO convert to time units in comment

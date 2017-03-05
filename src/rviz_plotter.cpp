@@ -8,7 +8,7 @@ ros::Publisher pub_joints,pub_link1, pub_link2, pub_link3;
 visualization_msgs::Marker joints, link1, link2, link3;//points as joints, lines as links
 RVIZ_Markers m;
 geometry_msgs::Point local_joint;
-std::string link1_name="root", link2_name="shoulder", link3_name="elbow";
+std::string link1_name="static", link2_name="dynamic", link3_name="static";
 void callback(const vicon_bridge::Markers& data)
 {
 joints.points.resize(data.markers.size());
