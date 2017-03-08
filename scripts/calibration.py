@@ -39,6 +39,7 @@ class TeleOp:
         self.set_neutral()
         rospy.sleep(5)
         self.vicon_sub = rospy.Subscriber("/vicon/markers", Markers, self.callback)
+        self.K = 0 # Initialize from param server
 
     def set_neutral(self):
         """
@@ -70,6 +71,13 @@ class TeleOp:
                 # print idx, name
                 cmd[name] =  joint_velocities[idx]* self._amp
             self.limb_right.set_joint_velocities(cmd)   
+
+    def get_pos_control(des_pos, des_jv):
+    	x = np.append(np.array([self.limb_right.joint_angles()[i] for i in self.limb_right.joint_names()]), np.array([self.limb_right.joint_velocity()[i] for i in self.limb_right.joint_names()]))
+    	x_des = np.append(des_pos, des_jv)
+    	e = x - x_des
+    	return -self.K*e
+
 
 
     def callback(self, data):
@@ -123,15 +131,15 @@ class TeleOp:
             old_time = old_pose_time[1]
 
             avg_ee_velocity = ((tor_P_ee - old_pose) / (current_time - old_time).to_sec())/1000.0 #scale down to meters/sec
-            jacob=self.right_kinematics.jacobian(self.limb_right.joint_angles())[0:3][:]
+            joint_angle_dict = self.limb_right.joint_angles()
+            jacob=self.right_kinematics.jacobian(joint_angle_dict)[0:3][:]
+
             joint_velocities=np.linalg.pinv(jacob)*avg_ee_velocity
-            # print (joint_velocities)
+    
+            get_pos_control(self.right_kinematics.inverse_kinematics(position = list(tor_P_ee), seed = [joint_angle_dict[i] for i in self.limb_right.joint_names]), joint_velocities)
             limb_right_names = self.limb_right.joint_names()
             self.send_joint_velocities(joint_velocities)
-        
-            
-            # puppet_arm.set_joint_velocities(cmd)
-            
+        	            
 
     
 
