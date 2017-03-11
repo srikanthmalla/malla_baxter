@@ -39,7 +39,7 @@ class TeleOp:
         self.set_neutral()
         # rospy.sleep(5)
         self.vicon_sub = rospy.Subscriber("/vicon/markers", Markers, self.callback)
-        self.K = 0 # Initialize from param server
+        self.K = 0.1 # Initialize from param server
 
     def set_neutral(self):
         """
@@ -74,6 +74,7 @@ class TeleOp:
 
     def get_pos_control(self,des_pos):
         if not(des_pos):
+            print 'inNone'
             return np.array([0,0,0,0,0,0,0])
     	x = (np.array([self.limb_right.joint_angles()[i] for i in self.limb_right.joint_names()]))
     	x_des = (des_pos)
@@ -138,8 +139,13 @@ class TeleOp:
 
             joint_velocities=np.linalg.pinv(jacob)*avg_ee_velocity
             # print joint_angle_dict
-            self.get_pos_control(self.right_kinematics.inverse_kinematics(position = list(tor_P_ee), seed = [joint_angle_dict[i] for i in self.limb_right.joint_names()]))
+            print list(tor_P_ee)
+
+            err=self.get_pos_control(self.right_kinematics.inverse_kinematics(position = list(tor_P_ee/2000), seed = [joint_angle_dict[i] for i in self.limb_right.joint_names()]))
             # limb_right_names = self.limb_right.joint_names()
+            # print np.transpose(err)+joint_velocities
+            # print err
+            # print np.shape(joint_velocities)
             self.send_joint_velocities(joint_velocities)
         	            
 
