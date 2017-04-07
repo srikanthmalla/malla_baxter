@@ -4,5 +4,11 @@ Project for Imitation learning on baxter robot
 roslaunch malla_baxter start_sim.launch
 ```
 ```
-roslaunch malla_baxter joint_mapping.launch
+rosbag play -l <bag_name>.bag
+```
+```
+roslaunch malla_baxter jointPubThreeJoints.py
+```
+```
+rosrun rviz rviz
 ```
