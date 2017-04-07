@@ -89,8 +89,6 @@ class JointMapper():
  
 if __name__ == '__main__':
     rospy.init_node('listener', anonymous=True)
-    
-
     print("Getting robot state... ")
     rs = baxter_interface.RobotEnable(CHECK_VERSION)
     init_state = rs.state().enabled
