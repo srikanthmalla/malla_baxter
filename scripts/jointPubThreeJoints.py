@@ -31,9 +31,9 @@ class JointMapper():
     def callback(self,data):
 
         # Get joint Markers from Bag file
-        shoulder_left = data.markers[0].translation
-        torso = data.markers[1].translation
-        shoulder_right = data.markers[2].translation
+        shoulder_left = data.markers[2].translation
+        torso = data.markers[0].translation
+        shoulder_right = data.markers[1].translation
         elbow_left = data.markers[4].translation
         wrist_left = data.markers[6].translation
 
