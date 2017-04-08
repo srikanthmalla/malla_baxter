@@ -14,15 +14,16 @@ angle_list = []
 window_size=1
 active_joints=3
 prev_angles=np.zeros((window_size,active_joints))
+stable_angles=np.zeros((window_size,active_joints))
 
 class JointMapper():
     def __init__(self, left, grip_left, lj):
         self.left = left
         self.grip_left = grip_left
         self.lj = lj
-    def set_j(self,limb, joint_name, angle,speed):
-        current_position = limb.joint_angle(joint_name)
-        joint_command = {joint_name: angle}
+    def set_j(self,limb, joint_names, angles,speed):
+        #current_position = limb.joint_angle(joint_names)
+        joint_command = {joint_names[0]: angles[0],joint_names[1]: angles[1],joint_names[2]: angles[2]}
         # speed_command = {joint_name: speed}
         # limb.set_joint_velocities(speed_command)
         limb.set_joint_positions(joint_command)
@@ -71,14 +72,14 @@ class JointMapper():
         elbowPitch_angle = (180/math.pi)*np.arccos(1.0*(dot_product)/(mag_v0*mag_v1))
         #angle_list.append(elbowPitch_angle)
 
-        b_shoulderPitch = 1.048859 - 0.01858033*(shoulderPitch_angle-25)
+        b_shoulderPitch = 1.048859 - 0.01858033*(shoulderPitch_angle-25) #beech me minus he
         b_shoulderYaw = -1.28969 + 0.023713529*(shoulderYaw_angle-83)
         b_elbowPitch = 2.606616 - 0.02124562*(elbowPitch_angle-55)
 
         # angle_list.append(b_shoulderPitch)
 	
-        del_shoulder_pitch=abs(b_shoulderPitch-prev_angles[0][0])
-        del_shoulder_yaw=abs(b_shoulderYaw-prev_angles[0][1])
+        del_shoulder_pitch=abs(b_shoulderPitch-prev_angles[0][1])
+        del_shoulder_yaw=abs(b_shoulderYaw-prev_angles[0][0])
         del_elbow_pitch=abs(b_elbowPitch-prev_angles[0][2])
         global prev_angles
         global window_size
@@ -89,28 +90,42 @@ class JointMapper():
         # shoulder pitch
         if (del_shoulder_pitch<0.9):
 			# print b_shoulderYaw+np.sum(prev_angles[:][1]),b_shoulderPitch+np.sum(prev_angles[:][0]),b_elbowPitch+np.sum(prev_angles[:][2])
-		self.set_j(self.left,self.lj[1],(b_shoulderPitch),speed);
+		#self.set_j(self.left,self.lj[1],(b_shoulderPitch),speed);
+		setShoulderPitch = b_shoulderPitch
 		f.data[0] = b_shoulderPitch
-		prev_angles[0][0]=b_shoulderPitch
+		prev_angles[0][1]=b_shoulderPitch
+		stable_angles[0][1] = b_shoulderPitch
 	else:
-		self.set_j(self.left,self.lj[0],(prev_angles[0][0]),speed)
-		f.data[0] = prev_angles[0][0]
+		#self.set_j(self.left,self.lj[1],(stable_angles[0][1]),speed)
+		setShoulderPitch = stable_angles[0][1]
+		prev_angles[0][1] = b_shoulderPitch
+		f.data[0] = stable_angles[0][1]
         # shoulder yaw	
 	if (del_shoulder_yaw<0.7):
-		self.set_j(self.left,self.lj[0],(b_shoulderYaw),speed)
+		#self.set_j(self.left,self.lj[0],(b_shoulderYaw),speed)
+		setShoulderYaw = b_shoulderYaw
 		f.data[1] = b_shoulderYaw		
-		prev_angles[0][1]=b_shoulderYaw	
+		prev_angles[0][0]=b_shoulderYaw	
+		stable_angles[0][0] = b_shoulderYaw
 	else:
-		self.set_j(self.left,self.lj[1],(prev_angles[0][1]),speed);		
-		f.data[1] = prev_angles[0][1]
+		#self.set_j(self.left,self.lj[0],(prev_angles[0][0]),speed);	
+		setShoulderYaw = stable_angles[0][0]
+		prev_angles[0][0] = b_shoulderPitch	
+		f.data[1] = stable_angles[0][1]
         # elbow pitch
 	if (del_elbow_pitch<0.7):
-		self.set_j(self.left,self.lj[3],(b_elbowPitch),speed);
+		#self.set_j(self.left,self.lj[3],(b_elbowPitch),speed);
+		setElbowPitch = b_elbowPitch
 		prev_angles[0][2]=b_elbowPitch
 		f.data[2] = b_elbowPitch
+		stable_angles[0][2] = b_elbowPitch
 	else:
-		self.set_j(self.left,self.lj[3],(prev_angles[0][2]),speed);
-		f.data[2] = prev_angles[0][2]
+		#self.set_j(self.left,self.lj[3],(prev_angles[0][2]),speed);
+		setElbowPitch = stable_angles[0][2]
+		prev_angles[0][2] = b_elbowPitch
+		f.data[2] = stable_angles[0][2]
+	
+	self.set_j(self.left,[self.lj[0],self.lj[1],self.lj[2]],[setShoulderYaw, setShoulderPitch, setElbowPitch],speed);
 	pub.publish(f)
        # for i in range(1,np.shape(prev_angles)[0]):
 	#        prev_angles[i][:]=prev_angles[i-1][:]

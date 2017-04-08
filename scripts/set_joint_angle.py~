@@ -25,7 +25,7 @@ limb_left = baxter_interface.Limb('left')
 pi=3.147
 # store the home position of the arms
 home_right = {'right_s0': -1.109, 'right_s1': -1.4457, 'right_w0': 0.3259, 'right_w1': 1.973, 'right_w2': -3.039, 'right_e0': -0.195, 'right_e1': 0.78}
-home_left = {'left_s0': 0.5, 'left_s1': 0.5, 'left_w0': -0.23, 'left_w1': -0.15, 'left_w2': 0, 'left_e0': 0.42, 'left_e1': -0.21}
+home_left = {'left_s0': 0.25, 'left_s1': 0.5, 'left_w0': -0.23, 'left_w1': -0.15, 'left_w2': 0, 'left_e0': 0.42, 'left_e1': -0.21}
 print "before:",limb_left.endpoint_pose()
 
 # move both arms to home position
