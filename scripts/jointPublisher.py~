@@ -93,7 +93,7 @@ class JointMapper():
         b_shoulderPitch = 1.048859 - 0.019388*(shoulderPitch_angle-25) #beech me minus he
         b_shoulderYaw = -1.28969 + 0.023713529*(shoulderYaw_angle-83)
         b_elbowPitch = 2.0 - 0.017075*(elbowPitch_angle-55)
-        b_shoulderRoll = 0 + 0.014267778*(shoulderRoll_angle-170)
+        b_shoulderRoll = -1.77 + 0.014267778*(shoulderRoll_angle-170)
 
         # angle_list.append(b_shoulderPitch)
 	
