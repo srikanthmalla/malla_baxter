@@ -1,5 +1,0 @@
-<launch>
-	<node name="calibration" pkg="malla_baxter" type="calibration.py" respawn="true" output="screen">
-	<rosparam command="load" file="$(find malla_baxter)/config/calibration.yaml" />
-	</node>
-</launch>
